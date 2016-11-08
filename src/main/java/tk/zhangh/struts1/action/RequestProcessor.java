@@ -1,5 +1,7 @@
 package tk.zhangh.struts1.action;
 
+import tk.zhangh.struts1.config.ModuleConfig;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,54 +12,67 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class RequestProcessor {
 
+    private ModuleConfig moduleConfig;
+
+    /**
+     * 初始化配置信息
+     * @param moduleConfig 配置信息
+     */
+    public void init(ModuleConfig moduleConfig) {
+        this.moduleConfig = moduleConfig;
+    }
+
+    /**
+     * 处理请求
+     * @param req request
+     * @param resp response
+     */
     public void process(HttpServletRequest req, HttpServletResponse resp) {
-        // 获取请求路径信息
-        String path = getRequestPath(req, resp);
-        // 获取当前路径对应的ActionMapping
-        ActionMapping mapping = getActionMapping(req, resp, path);
-        // 从ActionMapping获取ActionForm，并验证
-        ActionForm form = getActionForm(req, resp, mapping);
-        // 从ActionMapping获取Action
-        Action action = getAction(req, resp, mapping);
-        // 验证
-        validateForm(req, resp, form, mapping);
-        // 调用Action
-        ActionForward forward = doAction(req, resp, action, form, mapping);
-        // 处理ActionForward
-        processForwardConfig(req, resp, forward);
+        ActionMapping mapping = getActionMapping();
+        Action action = getAction(req);
+        ActionForm form = initActionForm(req);
+        doAction(req, resp, action, form, mapping);
     }
 
-    protected String getRequestPath(HttpServletRequest req, HttpServletResponse resp) {
+    /**
+     * 获取ActionMapping
+     * @return actionMapping
+     */
+    private ActionMapping getActionMapping() {
+        return moduleConfig.getActionMapping();
+    }
+
+    /**
+     * 获取Action
+     * @param req request
+     * @return Action
+     */
+    protected Action getAction(HttpServletRequest req) {
+        String path = req.getPathInfo();
+        ActionMapping mapping = getActionMapping();
+        return mapping.findAction(path);
+    }
+
+    /**
+     * 根据请求参数生成Form
+     * @param req request
+     * @return ActionForm
+     */
+    protected ActionForm initActionForm(HttpServletRequest req) {
         return null;
     }
 
-    protected ActionMapping getActionMapping(HttpServletRequest req, HttpServletResponse resp, String path) {
-        return null;
-    }
-
-    protected ActionForm getActionForm(HttpServletRequest req, HttpServletResponse resp, ActionMapping mapping) {
-        return initActionForm(req, resp);
-    }
-
-    protected Action getAction(HttpServletRequest req, HttpServletResponse resp, ActionMapping mapping) {
-        return null;
-    }
-
-    protected ActionForm initActionForm(HttpServletRequest req, HttpServletResponse resp) {
-        return null;
-    }
-
-    protected void validateForm(HttpServletRequest req, HttpServletResponse resp,
-                                ActionForm form, ActionMapping mapping) {
-
-    }
-
+    /**
+     * 请求实际处理方法
+     * @param req request
+     * @param resp response
+     * @param action action
+     * @param form actionForm
+     * @param mapping actionMapping
+     * @return actionForward
+     */
     protected ActionForward doAction(HttpServletRequest req, HttpServletResponse resp,
                                      Action action, ActionForm form, ActionMapping mapping) {
-        return null;
-    }
-
-    protected void processForwardConfig(HttpServletRequest req, HttpServletResponse resp, ActionForward forward) {
-
+        return action.execute(mapping, form, req, resp);
     }
 }

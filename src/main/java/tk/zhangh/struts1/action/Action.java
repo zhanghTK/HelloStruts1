@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * Created by ZhangHao on 2016/11/7.
  */
-public class Action {
-    public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
-        return null;
-    }
+public abstract class Action {
+
+    public abstract ActionForward execute(ActionMapping mapping, ActionForm form,
+                                          HttpServletRequest req, HttpServletResponse resp);
 }
