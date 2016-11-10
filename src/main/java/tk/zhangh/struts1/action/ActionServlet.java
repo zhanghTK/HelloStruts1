@@ -1,8 +1,10 @@
 package tk.zhangh.struts1.action;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import tk.zhangh.struts1.config.ActionConfig;
 import tk.zhangh.struts1.config.ModuleConfig;
 import tk.zhangh.struts1.config.ModuleConfigImpl;
-import tk.zhangh.web.HelloAction;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,59 +15,78 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Õû¸ö¿ò¼ÜµÄÈë¿Ú
+ * æ•´ä¸ªæ¡†æ¶çš„å…¥å£
  *
- * ¿ò¼ÜµÄ³õÊ¼»¯
- * ËùÓĞÇëÇóµÄÈë¿Ú
+ * æ¡†æ¶çš„åˆå§‹åŒ–
+ * æ‰€æœ‰è¯·æ±‚çš„å…¥å£
  *
  * Created by ZhangHao on 2016/11/7.
  */
 public class ActionServlet extends HttpServlet {
+
+    private Logger logger = LoggerFactory.getLogger(ActionServlet.class);
+
     RequestProcessor requestProcessor;
     ModuleConfig moduleConfig;
 
     /**
-     * ¿ò¼Ü³õÊ¼»¯
+     * æ¡†æ¶åˆå§‹åŒ–
      * @throws ServletException
      */
     @Override
     public void init() throws ServletException {
+        logger.info(getClass().getName() + " init");
         initModuleConfig();
         initRequestProcess();
     }
 
+    /**
+     * åˆå§‹åŒ–ModuleConfig
+     */
     private void initModuleConfig() {
+        logger.info("init ModuleConfig");
         moduleConfig = new ModuleConfigImpl();
-        ActionMapping actionMapping = moduleConfig.getActionMapping();
-        List<Action> actions = createActions();
-        for (Action action : actions) {
-            actionMapping.registerAction("/hello", action);
-        }
+        List<ActionConfig> actionConfigs = createActionConfig();
+        actionConfigs.forEach(o -> moduleConfig.addActionConfig(o));
     }
 
-    private List<Action> createActions() {
-        List<Action> actions = new ArrayList<>();
-        actions.add(new HelloAction());
+    /**
+     * åˆ›å»ºActionConfigå®ä¾‹åˆ—è¡¨
+     * @return actionConfigåˆ—è¡¨
+     */
+    private List<ActionConfig> createActionConfig() {
+        List<ActionConfig> actions = new ArrayList<>();
+        ActionConfig actionConfig = new ActionMapping();
+        actionConfig.setPath("/hello");
+        actionConfig.setType("tk.zhangh.web.HelloAction");
+        logger.info("add ActionConfig " + actionConfig);
+        actions.add(actionConfig);
         return actions;
     }
 
+    /**
+     * åˆå§‹åŒ–RequestProcess
+     */
     private void initRequestProcess() {
+        logger.info("init RequestProcess");
         requestProcessor = new RequestProcessor();
         requestProcessor.init(moduleConfig);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.info("process GET request");
         process(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        logger.info("process POST request");
         process(req, resp);
     }
 
     /**
-     * Î¯ÍĞ¸øRequestProcessorÀà½øĞĞ´¦Àí
+     * å§”æ‰˜ç»™RequestProcessorç±»è¿›è¡Œå¤„ç†
      */
     protected void process(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         requestProcessor.process(req, resp);

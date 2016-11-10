@@ -1,22 +1,12 @@
 package tk.zhangh.struts1.action;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import tk.zhangh.struts1.config.ActionConfig;
 
 /**
- * 保存框架对特定请求的处理流程配置信息
+ * Action鏄犲皠閰嶇疆淇℃伅
  *
  * Created by ZhangHao on 2016/11/7.
  */
-public class ActionMapping {
+public class ActionMapping extends ActionConfig {
 
-    private Map<String, Action> mapping = new ConcurrentHashMap<>();
-
-    public Action findAction(String url) {
-        return mapping.get(url);
-    }
-
-    public void registerAction(String url, Action action) {
-        mapping.put(url, action);
-    }
 }

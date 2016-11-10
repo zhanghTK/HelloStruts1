@@ -1,16 +1,28 @@
 package tk.zhangh.struts1.config;
 
-import tk.zhangh.struts1.action.ActionMapping;
+import lombok.ToString;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * ÉÏÏÂÎÄÅäÖÃĞÅÏ¢
+ * ä¸Šä¸‹æ–‡é…ç½®ä¿¡æ¯
  * Created by ZhangHao on 2016/11/8.
  */
+@ToString
 public class ModuleConfigImpl implements ModuleConfig {
-    private ActionMapping actionMapping = new ActionMapping();
+    /**
+     * Actioné…ç½®ä¿¡æ¯é›†åˆ
+     */
+    private Map<String, ActionConfig> actionConfigs = new ConcurrentHashMap<>();
 
     @Override
-    public ActionMapping getActionMapping() {
-        return actionMapping;
+    public void addActionConfig(ActionConfig actionConfig) {
+        actionConfigs.put(actionConfig.getPath(), actionConfig);
+    }
+
+    @Override
+    public ActionConfig findActionConfig(String path) {
+        return actionConfigs.get(path);
     }
 }

@@ -1,7 +1,7 @@
 package tk.zhangh.struts1.action;
 
 /**
- * 用于保存请求的数据信息和辅助完成数据验证
+ * 鐢ㄤ簬淇濆瓨璇锋眰鐨勬暟鎹俊鎭拰杈呭姪瀹屾垚鏁版嵁楠岃瘉
  *
  * Created by ZhangHao on 2016/11/7.
  */

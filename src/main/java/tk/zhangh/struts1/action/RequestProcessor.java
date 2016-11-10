@@ -1,69 +1,84 @@
 package tk.zhangh.struts1.action;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tk.zhangh.struts1.config.ModuleConfig;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * HttpÇëÇóµÄÊµ¼Ê´¦ÀíÀà
+ * Httpè¯·æ±‚çš„å®é™…å¤„ç†ç±»
  *
  * Created by ZhangHao on 2016/11/7.
  */
 public class RequestProcessor {
 
+    private static final Logger logger = LoggerFactory.getLogger(RequestProcessor.class);
+
     private ModuleConfig moduleConfig;
 
     /**
-     * ³õÊ¼»¯ÅäÖÃĞÅÏ¢
-     * @param moduleConfig ÅäÖÃĞÅÏ¢
+     * åˆå§‹åŒ–é…ç½®ä¿¡æ¯
+     * @param moduleConfig é…ç½®ä¿¡æ¯
      */
     public void init(ModuleConfig moduleConfig) {
+        logger.info("init ModuleConfig with " + moduleConfig.toString());
         this.moduleConfig = moduleConfig;
     }
 
     /**
-     * ´¦ÀíÇëÇó
+     * å¤„ç†è¯·æ±‚
      * @param req request
      * @param resp response
      */
     public void process(HttpServletRequest req, HttpServletResponse resp) {
-        ActionMapping mapping = getActionMapping();
-        Action action = getAction(req);
-        ActionForm form = initActionForm(req);
+        ActionMapping mapping = getActionMapping(req);
+        Action action = getAction(mapping);
+        ActionForm form = initActionForm(mapping, req);
         doAction(req, resp, action, form, mapping);
     }
 
     /**
-     * »ñÈ¡ActionMapping
+     * è·å–ActionMapping
      * @return actionMapping
      */
-    private ActionMapping getActionMapping() {
-        return moduleConfig.getActionMapping();
-    }
-
-    /**
-     * »ñÈ¡Action
-     * @param req request
-     * @return Action
-     */
-    protected Action getAction(HttpServletRequest req) {
+    private ActionMapping getActionMapping(HttpServletRequest req) {
         String path = req.getPathInfo();
-        ActionMapping mapping = getActionMapping();
-        return mapping.findAction(path);
+        logger.info("get action mapping,request path:" + path);
+        return (ActionMapping)moduleConfig.findActionConfig(path);
+    }
+
+
+    /**
+     * è·å–Action
+     * @param mapping actionMapping
+     * @return action
+     */
+    protected Action getAction(ActionMapping mapping) {
+        logger.info("get action,actionMapping:" + mapping);
+        String type = mapping.getType();
+        try {
+            Class actionClass = Class.forName(type);
+            return (Action)actionClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("get Action:" + type +" instance error:", e);
+            throw new RuntimeException("get Action:" + type +" instance error:", e);
+        }
     }
 
     /**
-     * ¸ù¾İÇëÇó²ÎÊıÉú³ÉForm
+     * æ ¹æ®è¯·æ±‚å‚æ•°ç”ŸæˆForm
      * @param req request
      * @return ActionForm
      */
-    protected ActionForm initActionForm(HttpServletRequest req) {
+    protected ActionForm initActionForm(ActionMapping mapping, HttpServletRequest req) {
         return null;
     }
 
     /**
-     * ÇëÇóÊµ¼Ê´¦Àí·½·¨
+     * è¯·æ±‚å®é™…å¤„ç†æ–¹æ³•
      * @param req request
      * @param resp response
      * @param action action

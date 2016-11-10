@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * ²âÊÔÊ¹ÓÃAction
+ * æµ‹è¯•ä½¿ç”¨Action
  *
  * Created by ZhangHao on 2016/11/8.
  */
 public class HelloAction extends Action {
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form,
                                  HttpServletRequest req, HttpServletResponse resp) {
