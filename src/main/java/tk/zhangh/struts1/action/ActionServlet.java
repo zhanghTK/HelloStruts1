@@ -47,7 +47,7 @@ public class ActionServlet extends HttpServlet {
         logger.info("init ModuleConfig");
         moduleConfig = new ModuleConfigImpl();
         List<ActionConfig> actionConfigs = createActionConfig();
-        actionConfigs.forEach(o -> moduleConfig.addActionConfig(o));
+        actionConfigs.forEach(moduleConfig::addActionConfig);
     }
 
     /**

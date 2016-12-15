@@ -16,6 +16,18 @@ public class ModuleConfigImpl implements ModuleConfig {
      */
     private Map<String, ActionConfig> actionConfigs = new ConcurrentHashMap<>();
 
+    private Map formBeans;
+
+    private Map forwards;
+
+    private boolean configured;
+
+    private String prefix;
+
+    private String actionFormBeanClass = "org.apache.struts.action.ActionFormBean";
+    private String actionMappingClass = "org.apache.struts.action.ActionMapping";
+    private String actionForwardClass = "org.apache.struts.action.ActionForward";
+
     @Override
     public void addActionConfig(ActionConfig actionConfig) {
         actionConfigs.put(actionConfig.getPath(), actionConfig);
