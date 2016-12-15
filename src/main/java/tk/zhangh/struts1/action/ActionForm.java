@@ -1,9 +1,21 @@
 package tk.zhangh.struts1.action;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 用于保存请求的数据信息和辅助完成数据验证
- *
+ * <p>
  * Created by ZhangHao on 2016/11/7.
  */
-public class ActionForm {
+@Data
+@NoArgsConstructor
+public abstract class ActionForm {
+    private transient ActionServlet servlet;
+
+    public abstract void reset(ActionMapping mapping, HttpServletRequest request);
+
+    public abstract ActionErrors validate(ActionMapping mapping, HttpServletRequest request);
 }

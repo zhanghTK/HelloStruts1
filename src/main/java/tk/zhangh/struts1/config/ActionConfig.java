@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Action类配置信息
+ * Action配置信息
  * Created by ZhangHao on 2016/11/9.
  */
 
@@ -16,10 +16,15 @@ public class ActionConfig {
     /**
      * 请求路径
      */
-    private String path = null;
+    private String path;
 
     /**
      * 请求路径对应的Action全类名
      */
-    private String type = null;
+    private String type;
+
+    /**
+     * 请求对应的from bean 名称
+     */
+    private String name;
 }

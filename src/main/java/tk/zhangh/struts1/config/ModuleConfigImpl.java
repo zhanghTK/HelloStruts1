@@ -16,17 +16,16 @@ public class ModuleConfigImpl implements ModuleConfig {
      */
     private Map<String, ActionConfig> actionConfigs = new ConcurrentHashMap<>();
 
-    private Map formBeans;
+    /**
+     * Form配置信息集合
+     */
+    private Map<String, FormBeanConfig> formBeanConfigs = new ConcurrentHashMap<>();
 
     private Map forwards;
 
     private boolean configured;
 
     private String prefix;
-
-    private String actionFormBeanClass = "org.apache.struts.action.ActionFormBean";
-    private String actionMappingClass = "org.apache.struts.action.ActionMapping";
-    private String actionForwardClass = "org.apache.struts.action.ActionForward";
 
     @Override
     public void addActionConfig(ActionConfig actionConfig) {
@@ -36,5 +35,15 @@ public class ModuleConfigImpl implements ModuleConfig {
     @Override
     public ActionConfig findActionConfig(String path) {
         return actionConfigs.get(path);
+    }
+
+    @Override
+    public void addFormBeanConfig(FormBeanConfig formBeanConfig) {
+        formBeanConfigs.put(formBeanConfig.getName(), formBeanConfig);
+    }
+
+    @Override
+    public FormBeanConfig findFormBeanConfig(String name) {
+        return formBeanConfigs.get(name);
     }
 }
