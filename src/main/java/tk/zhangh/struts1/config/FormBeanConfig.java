@@ -8,6 +8,9 @@ import tk.zhangh.struts1.action.ActionServlet;
 
 /**
  * Form配置信息
+ * <p>
+ * Form配置信息封装类,使用了lombok生成相关get,set方法
+ * <p>
  * Created by ZhangHao on 2016/12/15.
  */
 @Data

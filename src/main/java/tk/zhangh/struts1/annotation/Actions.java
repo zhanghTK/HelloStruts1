@@ -5,6 +5,8 @@ import java.lang.annotation.*;
 /**
  * Action类标记注解
  * <p>
+ * 相当于简化版的struts配置文件中的<action/>标签
+ * <p>
  * Created by ZhangHao on 2016/12/15.
  */
 @Target(ElementType.TYPE)

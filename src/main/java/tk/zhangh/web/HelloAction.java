@@ -13,6 +13,8 @@ import java.io.IOException;
 /**
  * 测试使用Action
  * <p>
+ * 对应一个简单Form类
+ * <p>
  * Created by ZhangHao on 2016/11/8.
  */
 @Actions(path = "/hello", name = "helloForm")

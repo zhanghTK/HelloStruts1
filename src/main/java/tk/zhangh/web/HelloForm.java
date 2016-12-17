@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 测试使用Form
+ * <p>
+ * HelloAction对应的Form类
+ * <p>
  * Created by ZhangHao on 2016/12/15.
  */
 @Forms
@@ -24,7 +27,8 @@ public class HelloForm extends ActionForm {
 
     @Override
     public void reset(ActionMapping mapping, HttpServletRequest request) {
-
+        name = null;
+        pass = null;
     }
 
     @Override

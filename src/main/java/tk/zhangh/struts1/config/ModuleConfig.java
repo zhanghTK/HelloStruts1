@@ -2,6 +2,9 @@ package tk.zhangh.struts1.config;
 
 /**
  * 上下文配置信息接口
+ * <p>
+ * 包含Action,Form等配置信息
+ * <p>
  * Created by ZhangHao on 2016/11/8.
  */
 public interface ModuleConfig {

@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 /**
  * Action配置信息
+ * <p>
+ * Action类的配置信息封装类,使用了lombok生成相关get,set方法
+ * <p>
  * Created by ZhangHao on 2016/11/9.
  */
 
@@ -27,4 +30,9 @@ public class ActionConfig {
      * 请求对应的from bean 名称
      */
     private String name;
+
+    /**
+     * 有效期
+     */
+    private String scope = "session";
 }

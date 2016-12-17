@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 用于保存请求的数据信息和辅助完成数据验证
+ * 抽象表单Form类
+ * <p>
+ * 对应页面表单Form,用于保存请求的数据信息和辅助完成数据验证
  * <p>
  * Created by ZhangHao on 2016/11/7.
  */
